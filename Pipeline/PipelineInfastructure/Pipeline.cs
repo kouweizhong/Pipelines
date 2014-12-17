@@ -18,23 +18,23 @@ namespace Pipeline.PipelineInfastructure
             IExecutor<T> root = null;
             IExecutor<T> previous = null;
 
-            foreach (IExecutor<T> phrase in _GetPhrase(processes))
+            foreach (IExecutor<T> step in _GetNextProcessStep(processes))
             {
                 if (root == null)
                 {
-                    root = phrase;
+                    root = step;
                 }
                 else
                 {
-                    previous.Register(phrase);
+                    previous.Register(step);
                 }
-                previous = phrase;
+                previous = step;
             }
 
             return root == null ? default(T) : root.Execute(processItem);
         }
 
-        private static IEnumerable<IExecutor<T>> _GetPhrase(IEnumerable<IExecutor<T>> processes)
+        private static IEnumerable<IExecutor<T>> _GetNextProcessStep(IEnumerable<IExecutor<T>> processes)
         {
             foreach (var process in processes)
             {

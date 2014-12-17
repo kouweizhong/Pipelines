@@ -9,6 +9,6 @@ namespace Pipeline.PipelineInfastructure
     public interface IExecutor<T>
     {
         T Execute(T input);
-        void Register(IExecutor<T> nextPhrase);
+        void Register(IExecutor<T> next);
     }
 }

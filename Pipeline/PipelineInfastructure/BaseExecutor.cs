@@ -8,25 +8,25 @@ namespace Pipeline.PipelineInfastructure
 {
     public abstract class BaseExecutor <T> : IExecutor<T>
     {
-        private IExecutor<T> _nextPhrase;
+        private IExecutor<T> _next;
 
         protected abstract T _Execute(T input);
 
         public T Execute(T input)
         {
-            T retVal = _Execute(input);
+            T ret = _Execute(input);
 
-            if (_nextPhrase != null)
+            if (_next != null)
             {
-                retVal = _nextPhrase.Execute(retVal);
+                ret = _next.Execute(ret);
             }
 
-            return retVal;
+            return ret;
         }
 
-        public void Register(IExecutor<T> nextPhrase)
+        public void Register(IExecutor<T> next)
         {
-            _nextPhrase = nextPhrase;
+            _next = next;
         }
     }
 }
